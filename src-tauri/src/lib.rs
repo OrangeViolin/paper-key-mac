@@ -1,3 +1,13 @@
+// 纸上键 · paper-key — macOS 机械键盘音效 App
+// Copyright (C) 2026 01fish
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// See LICENSE file or <https://www.gnu.org/licenses/> for details.
+
 use serde::Serialize;
 use std::sync::atomic::{AtomicBool, Ordering};
 use tauri::{Emitter, Manager};

@@ -1,0 +1,41 @@
+纸上键 · paper-key
+Copyright (C) 2026 01fish
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+================================================================================
+
+衍生作品声明 (Derivative Work Notice, GPL-3.0 §5a)
+
+本项目是 mechvibes (https://github.com/hainguyents13/mechvibes) 的衍生作品。
+
+- 所有 18 款音色包 (src/assets/sounds/*) 直接来自 mechvibes 仓库，
+  未经修改，版权归 mechvibes 及其上游音色录制者所有。
+- 音色包配置格式 (config.json 的 defines 字段、sprite 偏移设计)
+  完全沿用 mechvibes 的规范。
+- 其余代码 (Rust / JS / HTML / CSS) 由 01fish 原创，
+  用 Tauri 2 + CGEventTap 原生重写，未使用 mechvibes 任何源码。
+
+mechvibes 原始项目采用 GPL-3.0 授权，因此本项目也采用 GPL-3.0。
+
+================================================================================
+
+第三方依赖及其授权 (非穷尽列表)
+
+- Tauri 2             — MIT OR Apache-2.0    (tauri-apps)
+- core-foundation-rs  — MIT OR Apache-2.0    (Mozilla / Servo)
+- core-graphics       — MIT OR Apache-2.0    (Mozilla / Servo)
+- serde               — MIT OR Apache-2.0    (dtolnay et al.)
+
+上述依赖的授权与 GPL-3.0 兼容。完整依赖清单见 src-tauri/Cargo.lock。

@@ -1,5 +1,8 @@
-// 纸上键 build-4 · 极简健壮版
-// HTML 已硬编码 8 张卡；JS 只负责：点卡加载+播音、敲键播音、全局监听
+// 纸上键 · paper-key — macOS 机械键盘音效 App
+// Copyright (C) 2026 01fish
+// Licensed under GPL-3.0-or-later. See LICENSE file for details.
+//
+// 极简健壮版 · JS 负责：点卡加载+播音、敲键播音、全局监听桥
 console.log('[paper-key] app.js build-4 loaded');
 
 window.addEventListener('error', (e) => {

@@ -1,7 +1,14 @@
 {
-  "name": "app",
+  "name": "paper-key",
   "private": true,
   "version": "0.1.0",
+  "description": "纸上键 · 给你的键盘一百种灵魂（macOS 机械键盘音效 App）",
+  "license": "GPL-3.0-or-later",
+  "author": "01fish",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OrangeViolin/paper-key-mac.git"
+  },
   "type": "module",
   "scripts": {
     "tauri": "tauri"

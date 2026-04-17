@@ -60,10 +60,14 @@
 ## 开发
 
 ```bash
+# 1. 拉音色（首次必跑，从 mechvibes 上游克隆 18 款音色包到 src/assets/sounds/）
+bash scripts/fetch-sounds.sh
+
+# 2. 装依赖
 npm install
 rustup target add aarch64-apple-darwin  # M 系列 Mac
 
-# 开发模式
+# 3. 开发模式
 npm run tauri dev -- --target aarch64-apple-darwin
 
 # 打包
@@ -105,7 +109,18 @@ paper-key/
 
 ## License
 
-**GPL-3.0** — 因为引用了 mechvibes 的音色资产（GPL-3.0），保持一致。完整文本见 [LICENSE](LICENSE)。
+**GPL-3.0-or-later** — 因为引用了 mechvibes 的音色资产（GPL-3.0），本项目保持一致授权。
+
+- 完整协议文本：[LICENSE](LICENSE)
+- 版权声明 / 衍生作品声明 / 第三方依赖：[NOTICE](NOTICE)
+
+### 这意味着什么
+
+- ✅ 你可以**自由使用、修改、再分发**本项目（商业用途也可以）
+- ⚠️ 任何基于本项目的修改或衍生作品，**必须也采用 GPL-3.0 开源**，不能闭源
+- ⚠️ 分发二进制时必须同时提供完整源码（或给出可获取源码的方式）
+- ⚠️ 保留原始 `LICENSE` / `NOTICE` / 版权声明，不得移除
+- ⚠️ GPL-3.0 与 Apple App Store 分发条款不兼容，**无法上架 Mac App Store**
 
 ---
 
