@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>纸上键 · build-4</title>
+<link rel="stylesheet" href="style.css?v=4">
+</head>
+<body>
+<div class="app">
+  <header class="bar">
+    <div class="brand">
+      <span class="logo">01fish</span>
+      <h1>纸上键</h1>
+    </div>
+    <button id="btnListen" class="listen-btn off" onclick="window.__pk_startListen && window.__pk_startListen()">
+      <span class="dot"></span><span class="txt">落笔无声 · 点此开启</span>
+    </button>
+  </header>
+
+  <section class="picker">
+    <div class="picker-head">
+      <h2>选一个音色</h2>
+      <div class="vol">
+        <span class="vol-lbl">音量</span>
+        <input id="vol" type="range" min="0" max="100" value="80" oninput="window.__pk_setVol && window.__pk_setVol(this.value)">
+        <span id="volTxt" class="vol-txt">80</span>
+      </div>
+    </div>
+
+    <!-- 卡片硬编码，JS 挂了也能看到 -->
+    <div id="grid" class="grid">
+      <div class="card" data-pack="cherrymx-blue-pbt" onclick="window.__pk_pickPack && window.__pk_pickPack('cherrymx-blue-pbt')">
+        <span class="icon">🔵</span><div class="name">青轴 Blue</div><div class="sub">CherryMX · PBT</div>
+      </div>
+      <div class="card" data-pack="cherrymx-brown-pbt" onclick="window.__pk_pickPack && window.__pk_pickPack('cherrymx-brown-pbt')">
+        <span class="icon">🟤</span><div class="name">茶轴 Brown</div><div class="sub">CherryMX · PBT</div>
+      </div>
+      <div class="card" data-pack="cherrymx-red-pbt" onclick="window.__pk_pickPack && window.__pk_pickPack('cherrymx-red-pbt')">
+        <span class="icon">🔴</span><div class="name">红轴 Red</div><div class="sub">CherryMX · PBT</div>
+      </div>
+      <div class="card" data-pack="cherrymx-black-pbt" onclick="window.__pk_pickPack && window.__pk_pickPack('cherrymx-black-pbt')">
+        <span class="icon">⚫</span><div class="name">黑轴 Black</div><div class="sub">CherryMX · PBT</div>
+      </div>
+      <div class="card" data-pack="topre-purple-hybrid-pbt" onclick="window.__pk_pickPack && window.__pk_pickPack('topre-purple-hybrid-pbt')">
+        <span class="icon">⚪</span><div class="name">Topre 静电容</div><div class="sub">Purple Hybrid</div>
+      </div>
+      <div class="card" data-pack="cream-travel" onclick="window.__pk_pickPack && window.__pk_pickPack('cream-travel')">
+        <span class="icon">🧈</span><div class="name">NK Cream</div><div class="sub">Travel</div>
+      </div>
+      <div class="card" data-pack="eg-oreo" onclick="window.__pk_pickPack && window.__pk_pickPack('eg-oreo')">
+        <span class="icon">🍪</span><div class="name">EG Oreo</div><div class="sub">Everglide</div>
+      </div>
+      <div class="card" data-pack="holy-pandas" onclick="window.__pk_pickPack && window.__pk_pickPack('holy-pandas')">
+        <span class="icon">🐼</span><div class="name">Holy Pandas</div><div class="sub">Tactile 神级</div>
+      </div>
+      <div class="card" data-pack="cherrymx-blue-abs" onclick="window.__pk_pickPack && window.__pk_pickPack('cherrymx-blue-abs')">
+        <span class="icon">🔵</span><div class="name">青轴 Blue</div><div class="sub">CherryMX · ABS</div>
+      </div>
+      <div class="card" data-pack="cherrymx-brown-abs" onclick="window.__pk_pickPack && window.__pk_pickPack('cherrymx-brown-abs')">
+        <span class="icon">🟤</span><div class="name">茶轴 Brown</div><div class="sub">CherryMX · ABS</div>
+      </div>
+      <div class="card" data-pack="cherrymx-red-abs" onclick="window.__pk_pickPack && window.__pk_pickPack('cherrymx-red-abs')">
+        <span class="icon">🔴</span><div class="name">红轴 Red</div><div class="sub">CherryMX · ABS</div>
+      </div>
+      <div class="card" data-pack="cherrymx-black-abs" onclick="window.__pk_pickPack && window.__pk_pickPack('cherrymx-black-abs')">
+        <span class="icon">⚫</span><div class="name">黑轴 Black</div><div class="sub">CherryMX · ABS</div>
+      </div>
+      <div class="card" data-pack="nk-cream" onclick="window.__pk_pickPack && window.__pk_pickPack('nk-cream')">
+        <span class="icon">🥛</span><div class="name">NK Cream</div><div class="sub">NovelKeys</div>
+      </div>
+      <div class="card" data-pack="eg-crystal-purple" onclick="window.__pk_pickPack && window.__pk_pickPack('eg-crystal-purple')">
+        <span class="icon">💜</span><div class="name">EG Crystal</div><div class="sub">Everglide · Purple</div>
+      </div>
+      <div class="card" data-pack="turquoise" onclick="window.__pk_pickPack && window.__pk_pickPack('turquoise')">
+        <span class="icon">🩵</span><div class="name">Turquoise</div><div class="sub">Tealio · 青绿</div>
+      </div>
+      <div class="card" data-pack="mxblue-travel" onclick="window.__pk_pickPack && window.__pk_pickPack('mxblue-travel')">
+        <span class="icon">✈️</span><div class="name">青轴旅行版</div><div class="sub">Travel · Blue</div>
+      </div>
+      <div class="card" data-pack="mxbrown-travel" onclick="window.__pk_pickPack && window.__pk_pickPack('mxbrown-travel')">
+        <span class="icon">🧳</span><div class="name">茶轴旅行版</div><div class="sub">Travel · Brown</div>
+      </div>
+      <div class="card" data-pack="mxblack-travel" onclick="window.__pk_pickPack && window.__pk_pickPack('mxblack-travel')">
+        <span class="icon">🎒</span><div class="name">黑轴旅行版</div><div class="sub">Travel · Black</div>
+      </div>
+    </div>
+
+    <p id="loadHint" class="load-hint">静态 UI 已就绪 · 等 app.js 接管⋯⋯</p>
+  </section>
+
+  <!-- 授权引导弹窗 -->
+  <div id="permModal" class="perm-modal" hidden>
+    <div class="perm-mask" onclick="window.__pk_closePerm && window.__pk_closePerm()"></div>
+    <div class="perm-card">
+      <button class="perm-close" onclick="window.__pk_closePerm && window.__pk_closePerm()">×</button>
+      <h3>让笔墨有声 · 三步</h3>
+      <ol class="perm-steps">
+        <li><b>点下方按钮</b>打开系统设置 · 隐私与安全性 · 辅助功能</li>
+        <li>在列表里找到 <code>纸上键</code>，<b>打开开关</b>（可能需要再点一次加号添加）</li>
+        <li>回到这里 <b>点"我已开启，落笔有声"</b> 按钮</li>
+      </ol>
+      <div class="perm-btns">
+        <button class="perm-btn primary" onclick="window.__pk_openPrefs && window.__pk_openPrefs()">打开系统设置</button>
+        <button class="perm-btn" onclick="window.__pk_confirmPerm && window.__pk_confirmPerm()">我已开启，落笔有声</button>
+      </div>
+      <p class="perm-foot">⚠ 首次敲键盘后，系统才会把 纸上键 列进辅助功能。如果列表里没有，先回来随便敲一下键。</p>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <span id="current">—</span>
+    <span class="sep">·</span>
+    <a href="https://01fish.com" target="_blank">01fish</a>
+    <span class="sep">·</span>
+    <span>build-4</span>
+  </footer>
+</div>
+
+<script>
+  // 内联探针：立即把标题改成含时间戳，肉眼可辨
+  document.title = '纸上键 · build-4 · inline-ok';
+  window.__paperkey_inline_ran__ = true;
+</script>
+<script src="app.js?v=4"></script>
+</body>
+</html>

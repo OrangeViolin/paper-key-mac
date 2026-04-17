@@ -1,0 +1,255 @@
+:root {
+  --mo: #1A3328;
+  --paper: #F2EDE3;
+  --paper-dark: #E8E1D3;
+  --fish: #C44536;
+  --ink: #2B2B2B;
+  --line: rgba(26, 51, 40, 0.15);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: "PingFang SC", "Source Han Serif", serif;
+  background: var(--paper);
+  color: var(--mo);
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(26, 51, 40, 0.05), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(196, 69, 54, 0.03), transparent 50%);
+}
+
+.app {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 28px 32px 24px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ===== 顶栏 ===== */
+.bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 24px;
+}
+.brand { display: flex; align-items: baseline; gap: 12px; }
+.logo { font-size: 12px; letter-spacing: 2px; opacity: 0.6; font-weight: 600; }
+h1 {
+  font-size: 28px;
+  letter-spacing: 6px;
+  font-weight: 300;
+  border-bottom: 2px solid var(--mo);
+  padding-bottom: 2px;
+}
+
+.listen-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--mo);
+  font: inherit;
+  font-size: 13px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.listen-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(26,51,40,0.08); }
+.listen-btn .dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #bbb;
+  transition: background 0.2s;
+}
+.listen-btn.on {
+  background: var(--mo);
+  color: var(--paper);
+  border-color: var(--mo);
+}
+.listen-btn.on .dot { background: #8FD19E; box-shadow: 0 0 6px #8FD19E; }
+.listen-btn.loading .dot { background: var(--fish); animation: pulse 0.8s infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+/* ===== 选音色 ===== */
+.picker { flex: 1; }
+.picker-head {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 18px;
+}
+h2 {
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  padding-left: 10px;
+  border-left: 3px solid var(--fish);
+}
+.vol { display: flex; align-items: center; gap: 10px; font-size: 12px; opacity: 0.75; }
+.vol-lbl { letter-spacing: 1px; }
+#vol {
+  width: 120px;
+  accent-color: var(--mo);
+  cursor: pointer;
+}
+.vol-txt { min-width: 26px; text-align: right; font-variant-numeric: tabular-nums; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+}
+.card {
+  position: relative;
+  background: var(--paper-dark);
+  border: 1px solid transparent;
+  padding: 16px 12px 14px;
+  border-radius: 6px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.18s;
+  user-select: none;
+}
+.card:hover { background: #fff; transform: translateY(-2px); }
+.card.active {
+  background: var(--mo);
+  color: var(--paper);
+  border-color: var(--mo);
+  box-shadow: 0 4px 12px rgba(26,51,40,0.18);
+}
+.card .icon { font-size: 20px; display: block; margin-bottom: 4px; }
+.card .name { font-size: 13px; letter-spacing: 1px; }
+.card .sub { font-size: 11px; opacity: 0.55; margin-top: 2px; }
+.card.active .sub { opacity: 0.7; }
+.card.loading { opacity: 0.5; cursor: wait; }
+.card.loading::after {
+  content: '⟳';
+  position: absolute; top: 4px; right: 6px;
+  font-size: 12px;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.load-hint {
+  margin-top: 16px;
+  font-size: 12px;
+  opacity: 0.55;
+  text-align: center;
+  letter-spacing: 1px;
+}
+.load-hint.hidden { display: none; }
+
+/* ===== 底栏 ===== */
+.foot {
+  margin-top: 24px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--line);
+  text-align: center;
+  font-size: 11px;
+  opacity: 0.55;
+  letter-spacing: 1px;
+}
+.foot a { color: inherit; }
+.foot .sep { margin: 0 8px; opacity: 0.4; }
+
+/* ===== 权限引导弹窗 ===== */
+.perm-modal {
+  position: fixed; inset: 0; z-index: 500;
+  display: flex; align-items: center; justify-content: center;
+}
+.perm-modal[hidden] { display: none; }
+.perm-mask {
+  position: absolute; inset: 0;
+  background: rgba(26, 51, 40, 0.55);
+  backdrop-filter: blur(4px);
+}
+.perm-card {
+  position: relative;
+  background: var(--paper);
+  padding: 28px 28px 20px;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  max-width: 440px; width: 92%;
+}
+.perm-close {
+  position: absolute; top: 8px; right: 12px;
+  background: none; border: none;
+  font-size: 24px; color: var(--mo);
+  cursor: pointer; opacity: 0.6; line-height: 1;
+}
+.perm-close:hover { opacity: 1; }
+.perm-card h3 {
+  font-size: 17px; font-weight: 500;
+  letter-spacing: 2px; margin-bottom: 14px;
+}
+.perm-steps {
+  list-style: none;
+  counter-reset: step;
+  margin-bottom: 20px;
+}
+.perm-steps li {
+  counter-increment: step;
+  position: relative;
+  padding: 10px 0 10px 34px;
+  font-size: 13px; line-height: 1.7;
+  border-bottom: 1px dashed rgba(26,51,40,0.1);
+}
+.perm-steps li:last-child { border-bottom: none; }
+.perm-steps li::before {
+  content: counter(step);
+  position: absolute; left: 0; top: 12px;
+  width: 22px; height: 22px;
+  background: var(--mo); color: var(--paper);
+  border-radius: 50%;
+  font-size: 12px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+}
+.perm-steps code {
+  background: var(--paper-dark);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 12px;
+}
+.perm-btns {
+  display: flex; gap: 10px; margin-bottom: 12px;
+}
+.perm-btn {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--mo);
+  font: inherit;
+  font-size: 13px; letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.perm-btn:hover { transform: translateY(-1px); box-shadow: 0 3px 10px rgba(26,51,40,0.1); }
+.perm-btn.primary {
+  background: var(--fish); color: var(--paper);
+  border-color: var(--fish);
+}
+.perm-btn.primary:hover { background: #B03D2E; }
+.perm-foot {
+  font-size: 11px; opacity: 0.55;
+  line-height: 1.7;
+  padding: 8px 10px;
+  background: var(--paper-dark);
+  border-radius: 4px;
+}
+
+/* ===== 诊断条（开发用，生产可移除） ===== */
+.err-bar {
+  position: fixed; top: 0; left: 0; right: 0;
+  background: var(--fish); color: var(--paper);
+  padding: 8px 14px; z-index: 999;
+  font-size: 12px; font-family: ui-monospace, monospace;
+  white-space: pre-wrap;
+}
