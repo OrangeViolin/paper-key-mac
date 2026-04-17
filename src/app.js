@@ -61,6 +61,16 @@ function ensureCtx() {
 function loadPack(id) {
   if (packs[id]) return Promise.resolve(packs[id]);
   var ctx = ensureCtx();
+
+  // 合成音色包：不读文件，直接生成
+  if (id.indexOf('synth-') === 0 && window.__pk_synth) {
+    var buf = window.__pk_synth.generate(ctx, id);
+    if (!buf) return Promise.reject(new Error('合成包未定义: ' + id));
+    var p = { id: id, isSynth: true, synthBuf: buf };
+    packs[id] = p;
+    return Promise.resolve(p);
+  }
+
   setLoadHint('载入 ' + id + ' ⋯⋯');
   return fetch('assets/sounds/' + id + '/config.json')
     .then(function(r){ if(!r.ok) throw new Error('config '+r.status); return r.json(); })
@@ -113,6 +123,13 @@ function playScan(scan) {
   var p = packs[currentPackId];
   if (!p) return;
   var ctx = ensureCtx();
+
+  // 合成音色分支
+  if (p.isSynth) {
+    window.__pk_synth.play(ctx, p.synthBuf, volume, scan);
+    return;
+  }
+
   var cfg = p.config;
   var defines = cfg.defines || {};
   var t = ctx.currentTime;

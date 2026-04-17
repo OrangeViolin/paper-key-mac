@@ -105,6 +105,16 @@ h2 {
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 10px;
 }
+.section-title {
+  margin: 22px 0 10px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: var(--mo);
+  opacity: 0.72;
+  border-left: 3px solid var(--red);
+  padding-left: 10px;
+}
 .card {
   position: relative;
   background: var(--paper-dark);
