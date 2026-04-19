@@ -20,14 +20,21 @@
 
   <section class="calli">
     <div class="calli-head">
-      <h2>纸上描红 · 随意敲键，描一首诗</h2>
+      <h2>手敲金句 · 真打字，一字一落笔</h2>
       <div class="calli-btns">
-        <button class="calli-btn primary" onclick="window.__pk_calli && window.__pk_calli.start()">铺纸</button>
+        <button class="calli-btn" onclick="window.__pk_typing && window.__pk_typing.import()">导入</button>
+        <button class="calli-btn" onclick="window.__pk_typing && window.__pk_typing.clear()">清库</button>
+        <button class="calli-btn primary" onclick="window.__pk_typing && window.__pk_typing.start()">抽一句</button>
       </div>
     </div>
-    <div id="calliStage" class="calli-stage"></div>
-    <p id="calliHint" class="calli-hint">选好音色 → 点"铺纸" → 随意敲键</p>
-    <div id="calliResult" class="calli-result" hidden></div>
+    <div id="typeMeta" class="type-meta"></div>
+    <div class="type-paper" onclick="var i=document.getElementById('typeInput'); if(i) i.focus();">
+      <div id="typeText" class="type-text"></div>
+      <textarea id="typeInput" class="type-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" rows="1"></textarea>
+      <div class="type-progress-track"><div id="typeProgress" class="type-progress-bar"></div></div>
+    </div>
+    <p id="typeHint" class="calli-hint">选好音色 → 点"抽一句" → 对着文字真打（中文用输入法也行）</p>
+    <div id="typeResult" class="calli-result" hidden></div>
   </section>
 
   <section class="picker">
@@ -211,7 +218,7 @@
   window.__paperkey_inline_ran__ = true;
 </script>
 <script src="synth.js?v=1"></script>
-<script src="calligraphy.js?v=1"></script>
-<script src="app.js?v=6"></script>
+<script src="typing.js?v=1"></script>
+<script src="app.js?v=7"></script>
 </body>
 </html>
