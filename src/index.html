@@ -18,6 +18,18 @@
     </button>
   </header>
 
+  <section class="calli">
+    <div class="calli-head">
+      <h2>纸上描红 · 随意敲键，描一首诗</h2>
+      <div class="calli-btns">
+        <button class="calli-btn primary" onclick="window.__pk_calli && window.__pk_calli.start()">铺纸</button>
+      </div>
+    </div>
+    <div id="calliStage" class="calli-stage"></div>
+    <p id="calliHint" class="calli-hint">选好音色 → 点"铺纸" → 随意敲键</p>
+    <div id="calliResult" class="calli-result" hidden></div>
+  </section>
+
   <section class="picker">
     <div class="picker-head">
       <h2>选一个音色</h2>
@@ -187,7 +199,7 @@
   <footer class="foot">
     <span id="current">—</span>
     <span class="sep">·</span>
-    <a href="https://01fish.com" target="_blank">01fish</a>
+    <a href="https://github.com/OrangeViolin/paper-key-mac" target="_blank">GitHub</a>
     <span class="sep">·</span>
     <span>build-4</span>
   </footer>
@@ -199,6 +211,7 @@
   window.__paperkey_inline_ran__ = true;
 </script>
 <script src="synth.js?v=1"></script>
-<script src="app.js?v=5"></script>
+<script src="calligraphy.js?v=1"></script>
+<script src="app.js?v=6"></script>
 </body>
 </html>

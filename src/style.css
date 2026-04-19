@@ -255,6 +255,129 @@ h2 {
   border-radius: 4px;
 }
 
+/* ===== 纸上描红 ===== */
+.calli {
+  margin: 18px 0 8px;
+  padding: 20px 22px 18px;
+  background: var(--paper-dark);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  position: relative;
+}
+.calli::before {
+  content: "";
+  position: absolute;
+  top: 6px; left: 6px; right: 6px; bottom: 6px;
+  border: 1px solid rgba(26, 51, 40, 0.1);
+  border-radius: 2px;
+  pointer-events: none;
+}
+.calli-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 14px;
+}
+.calli-head h2 {
+  font-size: 15px; font-weight: 500; letter-spacing: 2px;
+  color: var(--mo);
+}
+.calli-btns { display: flex; gap: 8px; }
+.calli-btn {
+  background: transparent;
+  border: 1px solid var(--mo);
+  color: var(--mo);
+  padding: 6px 16px;
+  font-size: 12px; letter-spacing: 2px;
+  cursor: pointer;
+  font-family: inherit;
+  border-radius: 2px;
+  transition: all 0.15s;
+}
+.calli-btn:hover { background: var(--mo); color: var(--paper); }
+.calli-btn.primary { background: var(--mo); color: var(--paper); }
+.calli-btn.primary:hover { background: var(--fish); border-color: var(--fish); }
+.calli-stage {
+  min-height: 120px;
+  padding: 16px 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.calli-empty {
+  color: rgba(26, 51, 40, 0.4);
+  font-size: 13px; letter-spacing: 3px;
+}
+.calli-meta {
+  text-align: center;
+  margin-bottom: 12px;
+  font-size: 12px;
+  color: rgba(26, 51, 40, 0.55);
+  letter-spacing: 1px;
+}
+.calli-title { font-weight: 500; }
+.calli-author { margin-left: 8px; }
+.calli-poem {
+  display: flex; flex-direction: column; gap: 8px;
+  font-family: "Source Han Serif", "PingFang SC", serif;
+}
+.calli-line {
+  display: flex; justify-content: center; gap: 10px;
+}
+.calli-ch {
+  display: inline-block;
+  font-size: 28px;
+  color: rgba(26, 51, 40, 0.18);
+  transition: color 0.2s, transform 0.2s;
+  min-width: 32px; text-align: center;
+  line-height: 1.3;
+}
+.calli-ch.inked {
+  color: var(--mo);
+}
+.calli-ch.next {
+  color: var(--fish);
+  animation: calli-pulse 1.2s ease-in-out infinite;
+}
+@keyframes calli-pulse {
+  0%, 100% { opacity: 0.5; }
+  50%      { opacity: 1; }
+}
+.calli-hint {
+  text-align: center;
+  font-size: 12px;
+  color: rgba(26, 51, 40, 0.5);
+  margin-top: 10px;
+  letter-spacing: 2px;
+}
+.calli-result {
+  margin-top: 14px;
+  padding: 18px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  text-align: center;
+}
+.rc-rank {
+  font-size: 24px;
+  letter-spacing: 8px;
+  color: var(--fish);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+.rc-desc {
+  font-size: 13px;
+  color: var(--mo);
+  opacity: 0.75;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+.rc-stats {
+  font-size: 11px;
+  color: rgba(26, 51, 40, 0.5);
+  margin-bottom: 14px;
+  letter-spacing: 0.5px;
+}
+
 /* ===== 诊断条（开发用，生产可移除） ===== */
 .err-bar {
   position: fixed; top: 0; left: 0; right: 0;

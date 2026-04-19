@@ -222,6 +222,7 @@ window.addEventListener('keydown', function(e){
   if (e.repeat) return;
   var scan = BROWSER_CODE_TO_SCAN[e.code];
   if (scan) playScan(scan);
+  if (window.__pk_calli) window.__pk_calli.onKey();
 });
 
 // ===== Tauri 全局监听 =====
@@ -231,6 +232,7 @@ try {
     window.__TAURI__.event.listen('keypress', function(ev){
       var scan = ev.payload && ev.payload.scan;
       if (scan) playScan(scan);
+      if (window.__pk_calli) window.__pk_calli.onKey();
     });
   }
 } catch (e) { console.warn('tauri listen failed', e); }
