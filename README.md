@@ -20,13 +20,14 @@
 
 ## 下载 & 安装
 
-1. 下载最新 [Release](../../releases) 里的 `.dmg` 或 `.app.zip`
-2. 拖到 `/Applications/`
-3. 首次打开右键 → **打开**（ad-hoc 签名，未经 Apple 公证）
-4. 点"▶ 落笔无声 · 点此开启" → 按引导去 **系统设置 → 隐私与安全性 → 辅助功能** 打开"纸上键"开关 → 回来点"我已开启，落笔有声"
-5. 敲键盘，享受
+1. 下载最新 [Release](../../releases) 里的 `纸上键-v*.dmg`（Apple Silicon，macOS 11+）
+2. 打开 DMG，拖「纸上键」到 `/Applications/`
+3. 首次打开：在 `/Applications/` 里**右键 → 打开** → 弹窗里再点「打开」（ad-hoc 签名，未经 Apple 公证）
+4. 跟着 App 里的三步引导走：欢迎 → 解释 → 点「去开启」会弹系统授权对话框 → 在**系统设置 → 隐私与安全性 → 输入监控**里打开「纸上键」开关
+5. 回到 App，敲键盘 → 出声
 
-> 首次需要授权辅助功能是因为 macOS 要求任何抓全局键盘事件的 App 都必须拿到这个权限，跟截屏录屏同级。
+> macOS 对「全局捕获键盘事件」的 App 要求 **Input Monitoring（输入监控）** 权限，跟截屏录屏同级；首次授权后会一直记住。
+> 如果某次更新后显示「⚠ 权限失效」，点状态栏的修复面板，按指引在系统设置里把「纸上键」从列表删掉再拖回来即可（这是 ad-hoc 签名的已知限制，详见 [INSTALL.md](./INSTALL.md#权限失效怎么办)）。
 
 ---
 
@@ -70,11 +71,12 @@ rustup target add aarch64-apple-darwin  # M 系列 Mac
 # 3. 开发模式
 npm run tauri dev -- --target aarch64-apple-darwin
 
-# 打包
+# 打包（一键：build + ad-hoc 签名 + 自定义 DMG）
+bash scripts/release.sh 0.2.0
+# 产物：dist/纸上键-v0.2.0.dmg（约 23 MB，含 /Applications 拖拽符号链接）
+
+# 也可以只跑 Tauri 原生 build（不做 ad-hoc 重签）
 npm run tauri build -- --target aarch64-apple-darwin
-# 产物:
-#   src-tauri/target/aarch64-apple-darwin/release/bundle/macos/纸上键.app
-#   src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/纸上键_0.1.0_aarch64.dmg
 ```
 
 ### 目录
@@ -84,10 +86,16 @@ paper-key/
 ├── src/                  # 前端（原生 HTML + JS，无框架）
 │   ├── index.html        # 硬编码 18 张音色卡
 │   ├── app.js            # 音色加载 + Web Audio 播放 + Tauri event 桥
+│   ├── onboarding.js     # 3 步引导 + 权限状态栏 + 诊断面板
+│   ├── onboarding.css
 │   ├── style.css         # 宣纸风 UI
-│   └── assets/sounds/    # 18 款音色包（来自 mechvibes）
-└── src-tauri/
-    └── src/lib.rs        # CGEventTap 全局监听 + TCC 权限
+│   └── assets/sounds/    # 18 款音色包（来自 mechvibes，首次需跑 fetch-sounds.sh）
+├── src-tauri/
+│   └── src/lib.rs        # CGEventTap 全局监听 + IOHID 输入监控授权 + 诊断命令
+├── scripts/
+│   ├── fetch-sounds.sh   # 从 mechvibes 上游拉音色
+│   └── release.sh        # 一键 build + ad-hoc 签名 + DMG
+└── INSTALL.md            # 给 beta 用户看的安装/排错指南
 ```
 
 ### 添加新音色

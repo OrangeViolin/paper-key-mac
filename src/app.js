@@ -1,8 +1,5 @@
-// 纸上键 · paper-key — macOS 机械键盘音效 App
-// Copyright (C) 2026 01fish
-// Licensed under GPL-3.0-or-later. See LICENSE file for details.
-//
-// 极简健壮版 · JS 负责：点卡加载+播音、敲键播音、全局监听桥
+// 纸上键 build-4 · 极简健壮版
+// HTML 已硬编码 8 张卡；JS 只负责：点卡加载+播音、敲键播音、全局监听
 console.log('[paper-key] app.js build-4 loaded');
 
 window.addEventListener('error', (e) => {
@@ -221,9 +218,27 @@ loadPack(currentPackId).then(function(){
 window.addEventListener('keydown', function(e){
   if (e.repeat) return;
   var scan = BROWSER_CODE_TO_SCAN[e.code];
+  diagPulse(e.code, scan);
   if (scan) playScan(scan);
-  // 打字游戏由 textarea 的 input 事件自己处理，这里只管音效
 });
+
+// 诊断小气泡：敲一下右下角亮一下，证明 JS 活着
+function diagPulse(code, scan) {
+  var d = document.getElementById('pkDiag');
+  if (!d) {
+    d = document.createElement('div');
+    d.id = 'pkDiag';
+    d.style.cssText = 'position:fixed;right:10px;bottom:10px;padding:4px 10px;background:rgba(26,51,40,0.82);color:#F2EDE3;font:11px ui-monospace,monospace;border-radius:3px;z-index:999;opacity:0;transition:opacity 0.18s;pointer-events:none;';
+    document.body.appendChild(d);
+  }
+  var pkId = (typeof currentPackId !== 'undefined') ? currentPackId : '?';
+  var st = (audioCtx && audioCtx.state) || 'no-ctx';
+  var loaded = packs[pkId] ? 'ok' : 'miss';
+  d.textContent = code + ' · scan=' + (scan || '—') + ' · ctx=' + st + ' · pack=' + loaded;
+  d.style.opacity = '1';
+  clearTimeout(d._t);
+  d._t = setTimeout(function(){ d.style.opacity = '0'; }, 1200);
+}
 
 // ===== Tauri 全局监听 =====
 var isTauri = !!(window.__TAURI__ || window.__TAURI_INTERNALS__);
@@ -236,59 +251,34 @@ try {
   }
 } catch (e) { console.warn('tauri listen failed', e); }
 
-function setListenBtn(cls, msg) {
-  var b = document.getElementById('btnListen');
-  if (!b) return;
-  b.classList.remove('off','on','loading');
-  b.classList.add(cls);
-  var t = b.querySelector('.txt');
-  if (t) t.textContent = msg;
-}
-function tauriInvoke(cmd) {
+function tauriInvoke(cmd, args) {
   var invoke = (window.__TAURI__ && window.__TAURI__.core && window.__TAURI__.core.invoke) || (window.__TAURI__ && window.__TAURI__.invoke);
   if (!invoke) return Promise.reject(new Error('invoke 不可用'));
-  return invoke(cmd);
+  return invoke(cmd, args);
 }
 
-function startListen() {
-  if (!isTauri) { setListenBtn('off','浏览器内 · 仅本窗口有声'); return; }
-  var m = document.getElementById('permModal');
-  if (m) m.hidden = false;
-  // 关键：调用 AXIsProcessTrustedWithOptions，
-  // 这会触发 macOS 弹授权对话框，并把 paper-key 加到辅助功能列表
-  tauriInvoke('request_accessibility').then(function(trusted){
-    if (trusted) {
-      // 已授权，直接启动
-      window.__pk_confirmPerm();
+// 状态条点击 → 交给 onboarding 模块处理
+window.__pk_statusClick = function () {
+  if (!isTauri) return;
+  tauriInvoke('diagnose').then(function (d) {
+    if (d.input_monitoring === 'granted' && !d.tap_started) {
+      // 权限有，尝试启动
+      tauriInvoke('start_global_listen');
+    } else if (d.input_monitoring === 'granted' && d.tap_started) {
+      // 已在监听，点一下显示诊断
+      if (window.__pk_onboarding) window.__pk_onboarding.showDiagnostic();
+    } else if (d.input_monitoring === 'denied') {
+      // 拒绝过，打开诊断面板引导修复
+      if (window.__pk_onboarding) window.__pk_onboarding.showDiagnostic();
+    } else {
+      // 未决定，先试探性调用 request
+      tauriInvoke('request_input_monitoring').then(function () {
+        setTimeout(function () {
+          tauriInvoke('start_global_listen');
+        }, 400);
+      });
     }
-  }).catch(function(){});
-  tauriInvoke('start_global_listen').catch(function(){});
-}
-window.__pk_startListen = startListen;
-
-window.__pk_openPrefs = function() {
-  tauriInvoke('open_accessibility_prefs').catch(function(err){
-    alert('无法打开系统设置：' + (err && err.message || err));
   });
 };
-
-window.__pk_closePerm = function() {
-  var m = document.getElementById('permModal');
-  if (m) m.hidden = true;
-};
-
-window.__pk_confirmPerm = function() {
-  // 用户刚开启授权：TCC 新状态需要进程重启才生效
-  setListenBtn('loading','重启生效中⋯⋯');
-  tauriInvoke('relaunch_app').catch(function(err){
-    setListenBtn('off','✗ 重启失败：' + (err && err.message || err));
-  });
-};
-
-if (!isTauri) {
-  setListenBtn('off','浏览器内 · 仅本窗口有声');
-} else {
-  setListenBtn('off','▶ 落笔无声 · 点此开启');
-}
 
 console.log('%c纸上键 build-4 · 就绪', 'color:#1A3328;font-weight:600');

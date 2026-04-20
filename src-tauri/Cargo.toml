@@ -1,6 +1,6 @@
 [package]
 name = "paper-key"
-version = "0.1.0"
+version = "0.2.0"
 description = "纸上键 · 给你的键盘一百种灵魂"
 authors = ["01fish"]
 edition = "2021"

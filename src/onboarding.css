@@ -1,0 +1,339 @@
+/* ================================================
+ * 纸上键 · 首次引导 + 诊断面板
+ * ================================================ */
+
+/* 状态条额外态 */
+.listen-btn.stale {
+  background: #F2C46D;
+  color: #4a3a10;
+  border-color: #d8a842;
+}
+.listen-btn.stale .dot {
+  background: #C44536;
+  box-shadow: 0 0 6px #C44536;
+}
+
+/* ================================================
+ * Onboarding Modal
+ * ================================================ */
+.pk-ob {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pk-ob[hidden] {
+  display: none;
+}
+.pk-ob-mask {
+  position: absolute;
+  inset: 0;
+  background: rgba(26, 51, 40, 0.7);
+  backdrop-filter: blur(6px);
+}
+.pk-ob-card {
+  position: relative;
+  z-index: 1;
+  background: var(--paper);
+  border-radius: 12px;
+  padding: 36px 40px 28px;
+  width: min(480px, 90vw);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+  text-align: left;
+}
+.pk-ob-title {
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 4px;
+  color: var(--mo);
+  margin: 0 0 20px;
+  border-bottom: 2px solid var(--mo);
+  padding-bottom: 8px;
+  display: inline-block;
+}
+.pk-ob-body {
+  min-height: 140px;
+  margin-bottom: 20px;
+}
+.pk-ob-p {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--mo);
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+.pk-ob-p strong {
+  color: var(--fish);
+  font-weight: 500;
+}
+.pk-ob-p code {
+  background: var(--paper-dark);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-family: ui-monospace, "Menlo", monospace;
+  font-size: 12px;
+}
+.pk-ob-muted {
+  opacity: 0.65;
+  font-size: 13px;
+}
+.pk-ob-perm {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: var(--paper-dark);
+  border-radius: 6px;
+  margin: 14px 0;
+}
+.pk-ob-perm-icon {
+  font-size: 26px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--mo);
+  color: var(--paper);
+  border-radius: 50%;
+  flex: 0 0 44px;
+}
+.pk-ob-perm-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--mo);
+  letter-spacing: 1px;
+}
+.pk-ob-perm-desc {
+  font-size: 12px;
+  opacity: 0.6;
+  margin-top: 2px;
+}
+.pk-ob-status {
+  margin-top: 14px;
+}
+.pk-ob-check {
+  padding: 10px 12px;
+  background: var(--paper-dark);
+  border-radius: 4px;
+  font-size: 13px;
+  color: var(--mo);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pk-ob-check-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #C44536;
+  flex: 0 0 10px;
+}
+.pk-ob-check.ok {
+  background: #D4E8CC;
+}
+.pk-ob-check.ok .pk-ob-check-dot {
+  background: #3A8B3A;
+  box-shadow: 0 0 6px #3A8B3A;
+}
+.pk-ob-foot {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  padding-top: 14px;
+  border-top: 1px dashed rgba(26, 51, 40, 0.1);
+  flex-wrap: wrap;
+}
+.pk-ob-btn {
+  padding: 10px 20px;
+  border-radius: 4px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--mo);
+  font: inherit;
+  font-size: 13px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.pk-ob-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(26, 51, 40, 0.12);
+}
+.pk-ob-btn.pk-ob-primary {
+  background: var(--mo);
+  color: var(--paper);
+  border-color: var(--mo);
+}
+.pk-ob-btn.pk-ob-primary:hover {
+  background: var(--fish);
+  border-color: var(--fish);
+}
+.pk-ob-btn.pk-ob-success {
+  background: #3A8B3A;
+  color: var(--paper);
+  border-color: #3A8B3A;
+}
+.pk-ob-btn.pk-ob-success:hover {
+  background: #2E7030;
+  border-color: #2E7030;
+}
+.pk-ob-dots {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 8px;
+}
+.pk-ob-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(26, 51, 40, 0.15);
+  transition: all 0.2s;
+}
+.pk-ob-dot.active {
+  background: var(--mo);
+  width: 18px;
+  border-radius: 3px;
+}
+
+/* ================================================
+ * 诊断面板
+ * ================================================ */
+.pk-dd {
+  position: fixed;
+  inset: 0;
+  z-index: 1900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pk-dd[hidden] {
+  display: none;
+}
+.pk-dd-mask {
+  position: absolute;
+  inset: 0;
+  background: rgba(26, 51, 40, 0.55);
+  backdrop-filter: blur(4px);
+}
+.pk-dd-card {
+  position: relative;
+  z-index: 1;
+  background: var(--paper);
+  border-radius: 8px;
+  padding: 26px 28px 22px;
+  width: min(520px, 92vw);
+  max-height: 86vh;
+  overflow-y: auto;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+}
+.pk-dd-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+}
+.pk-dd-head h3 {
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: var(--mo);
+}
+.pk-dd-close {
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: var(--mo);
+  cursor: pointer;
+  opacity: 0.5;
+}
+.pk-dd-close:hover {
+  opacity: 1;
+}
+.pk-dd-body {
+  font-size: 13px;
+  margin-bottom: 18px;
+}
+.pk-dd-tbl {
+  width: 100%;
+  border-collapse: collapse;
+}
+.pk-dd-tbl td {
+  padding: 8px 0;
+  border-bottom: 1px dashed rgba(26, 51, 40, 0.08);
+}
+.pk-dd-tbl td:first-child {
+  color: rgba(26, 51, 40, 0.6);
+  letter-spacing: 1px;
+  width: 30%;
+}
+.pk-dd-tbl td:last-child {
+  color: var(--mo);
+}
+.pk-dd-tbl code {
+  font-family: ui-monospace, "Menlo", monospace;
+  font-size: 11px;
+  background: var(--paper-dark);
+  padding: 2px 6px;
+  border-radius: 3px;
+  word-break: break-all;
+}
+.pk-dd-path {
+  display: inline-block;
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+.pk-dd-warn {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: #FFF4D8;
+  border-left: 3px solid #d8a842;
+  border-radius: 3px;
+  font-size: 12px;
+  line-height: 1.8;
+  color: #4a3a10;
+}
+.pk-dd-warn code {
+  background: rgba(74, 58, 16, 0.1);
+  padding: 1px 4px;
+  border-radius: 2px;
+  font-size: 11px;
+}
+.pk-dd-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-top: 14px;
+  border-top: 1px dashed var(--line);
+}
+.pk-dd-btn {
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--mo);
+  border-radius: 3px;
+  font: inherit;
+  font-size: 12px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.pk-dd-btn:hover {
+  background: var(--mo);
+  color: var(--paper);
+  border-color: var(--mo);
+}
+.pk-dd-btn.primary {
+  background: var(--mo);
+  color: var(--paper);
+  border-color: var(--mo);
+}
+.pk-dd-btn.primary:hover {
+  background: var(--fish);
+  border-color: var(--fish);
+}

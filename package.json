@@ -1,7 +1,7 @@
 {
   "name": "paper-key",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "纸上键 · 给你的键盘一百种灵魂（macOS 机械键盘音效 App）",
   "license": "GPL-3.0-or-later",
   "author": "01fish",

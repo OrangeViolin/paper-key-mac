@@ -433,3 +433,258 @@ h2 {
   font-size: 12px; font-family: ui-monospace, monospace;
   white-space: pre-wrap;
 }
+
+/* ===== 自建 Modal & Toast（Tauri WebView 禁 prompt/alert） ===== */
+.pk-modal {
+  position: fixed; inset: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: center;
+}
+.pk-mask {
+  position: absolute; inset: 0;
+  background: rgba(26, 51, 40, 0.55);
+  backdrop-filter: blur(2px);
+}
+.pk-card {
+  position: relative; z-index: 1;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 26px 28px 22px;
+  width: min(560px, 92vw);
+  box-shadow: 0 20px 60px rgba(26, 51, 40, 0.3);
+}
+.pk-card-sm { width: min(360px, 88vw); }
+.pk-card h3 {
+  margin: 0 0 6px;
+  font-size: 16px;
+  color: var(--mo);
+  letter-spacing: 2px;
+}
+.pk-sub {
+  margin: 0 0 14px;
+  font-size: 12px;
+  color: rgba(26, 51, 40, 0.6);
+  letter-spacing: 1px;
+}
+.pk-sub code {
+  font-family: ui-monospace, monospace;
+  background: rgba(26, 51, 40, 0.08);
+  padding: 1px 5px;
+  border-radius: 2px;
+  font-size: 11px;
+}
+.pk-ta {
+  width: 100%;
+  min-height: 180px;
+  box-sizing: border-box;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 10px 12px;
+  font-family: ui-monospace, "Menlo", monospace;
+  font-size: 12px;
+  background: #fff;
+  color: var(--mo);
+  resize: vertical;
+  outline: none;
+}
+.pk-ta:focus { border-color: var(--mo); }
+.pk-btns {
+  margin-top: 14px;
+  display: flex; gap: 8px; justify-content: flex-end;
+}
+
+.pk-toast {
+  position: fixed;
+  left: 50%; bottom: 48px;
+  transform: translate(-50%, 20px);
+  background: var(--mo);
+  color: var(--paper);
+  padding: 10px 18px;
+  border-radius: 3px;
+  font-size: 13px;
+  letter-spacing: 1px;
+  opacity: 0;
+  z-index: 1100;
+  transition: opacity 0.25s, transform 0.25s;
+  box-shadow: 0 10px 30px rgba(26, 51, 40, 0.4);
+  max-width: 80vw;
+  text-align: center;
+}
+.pk-toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* ===== 金句库管理 Modal ===== */
+.pk-card-lg { width: min(680px, 94vw); max-height: 84vh; display: flex; flex-direction: column; }
+.pk-mgr-head { margin-bottom: 10px; }
+.pk-mgr-list {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 4px;
+  background: #fff;
+  min-height: 180px;
+  max-height: 52vh;
+}
+.pk-q-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 10px 10px 12px;
+  border-bottom: 1px solid rgba(26, 51, 40, 0.08);
+}
+.pk-q-row:last-child { border-bottom: none; }
+.pk-q-row:hover { background: rgba(26, 51, 40, 0.03); }
+.pk-q-main { flex: 1 1 auto; min-width: 0; }
+.pk-q-text {
+  color: var(--mo);
+  font-size: 13px;
+  line-height: 1.6;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+.pk-q-meta {
+  margin-top: 4px;
+  font-size: 11px;
+  color: rgba(26, 51, 40, 0.5);
+  letter-spacing: 0.5px;
+}
+.pk-q-del {
+  flex: 0 0 auto;
+  width: 26px; height: 26px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: rgba(26, 51, 40, 0.55);
+  border-radius: 3px;
+  font-size: 16px; line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.15s;
+}
+.pk-q-del:hover {
+  background: var(--mo);
+  color: var(--paper);
+  border-color: var(--mo);
+}
+.pk-empty {
+  padding: 48px 12px;
+  text-align: center;
+  color: rgba(26, 51, 40, 0.45);
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+.pk-btns { justify-content: space-between; }
+.pk-btns .pk-clear-all { color: #C44536; border-color: rgba(196, 69, 54, 0.4); }
+.pk-btns .pk-clear-all:hover { background: #C44536; color: var(--paper); border-color: #C44536; }
+
+/* Tabs */
+.pk-mgr-tabs { display: flex; gap: 4px; margin: 0 0 10px; }
+.pk-mgr-tab {
+  background: transparent;
+  border: 1px solid var(--line);
+  padding: 4px 14px;
+  font-size: 12px;
+  color: rgba(26, 51, 40, 0.55);
+  cursor: pointer;
+  letter-spacing: 1px;
+  border-radius: 2px;
+}
+.pk-mgr-tab:hover { color: var(--mo); border-color: var(--mo); }
+.pk-mgr-tab.active {
+  background: var(--mo);
+  color: var(--paper);
+  border-color: var(--mo);
+}
+
+/* 按书分组 */
+.pk-book { border-bottom: 1px solid rgba(26, 51, 40, 0.08); }
+.pk-book:last-child { border-bottom: none; }
+.pk-book-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  cursor: pointer;
+  user-select: none;
+}
+.pk-book-head:hover { background: rgba(26, 51, 40, 0.04); }
+.pk-book-arrow {
+  color: rgba(26, 51, 40, 0.5);
+  font-size: 11px;
+  width: 12px;
+  flex: 0 0 12px;
+}
+.pk-book-name {
+  flex: 1 1 auto;
+  color: var(--mo);
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  letter-spacing: 0.5px;
+}
+.pk-book-count {
+  flex: 0 0 auto;
+  color: rgba(26, 51, 40, 0.55);
+  font-size: 11px;
+  padding: 1px 8px;
+  background: rgba(26, 51, 40, 0.08);
+  border-radius: 2px;
+  font-family: ui-monospace, monospace;
+}
+.pk-book-del {
+  flex: 0 0 auto;
+  width: 22px; height: 22px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: rgba(26, 51, 40, 0.4);
+  font-size: 14px; line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  border-radius: 2px;
+}
+.pk-book-del:hover {
+  background: #C44536;
+  color: var(--paper);
+  border-color: #C44536;
+}
+.pk-book-body {
+  padding: 2px 0 6px 18px;
+  background: rgba(26, 51, 40, 0.02);
+}
+
+/* 导入 Modal · URL 输入 */
+.pk-or {
+  text-align: center;
+  color: rgba(26, 51, 40, 0.4);
+  font-size: 12px;
+  letter-spacing: 4px;
+  margin: 14px 0 8px;
+  position: relative;
+}
+.pk-or::before, .pk-or::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: calc(50% - 18px);
+  height: 1px;
+  background: rgba(26, 51, 40, 0.12);
+}
+.pk-or::before { left: 0; }
+.pk-or::after { right: 0; }
+.pk-url-input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 9px 12px;
+  font-size: 13px;
+  font-family: ui-monospace, "Menlo", monospace;
+  color: var(--mo);
+  background: #fff;
+  outline: none;
+}
+.pk-url-input:focus { border-color: var(--mo); }
+.pk-url-input::placeholder { color: rgba(26, 51, 40, 0.35); }

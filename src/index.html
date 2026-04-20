@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>纸上键 · build-4</title>
-<link rel="stylesheet" href="style.css?v=4">
+<link rel="stylesheet" href="style.css?v=8">
+<link rel="stylesheet" href="onboarding.css?v=1">
 </head>
 <body>
 <div class="app">
@@ -13,8 +14,8 @@
       <span class="logo">01fish</span>
       <h1>纸上键</h1>
     </div>
-    <button id="btnListen" class="listen-btn off" onclick="window.__pk_startListen && window.__pk_startListen()">
-      <span class="dot"></span><span class="txt">落笔无声 · 点此开启</span>
+    <button id="btnListen" class="listen-btn off" onclick="window.__pk_statusClick && window.__pk_statusClick()">
+      <span class="dot"></span><span class="txt">▶ 开启全局监听</span>
     </button>
   </header>
 
@@ -22,8 +23,8 @@
     <div class="calli-head">
       <h2>手敲金句 · 真打字，一字一落笔</h2>
       <div class="calli-btns">
-        <button class="calli-btn" onclick="window.__pk_typing && window.__pk_typing.import()">导入</button>
-        <button class="calli-btn" onclick="window.__pk_typing && window.__pk_typing.clear()">清库</button>
+        <button class="calli-btn" onclick="window.__pk_typing && window.__pk_typing.import()" title="zip / json / md / txt / html / 文章链接都行，自动挖金句">导入</button>
+        <button class="calli-btn" onclick="window.__pk_typing && window.__pk_typing.manage()" title="查看、删除导入的金句">管理</button>
         <button class="calli-btn primary" onclick="window.__pk_typing && window.__pk_typing.start()">抽一句</button>
       </div>
     </div>
@@ -33,7 +34,7 @@
       <textarea id="typeInput" class="type-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" rows="1"></textarea>
       <div class="type-progress-track"><div id="typeProgress" class="type-progress-bar"></div></div>
     </div>
-    <p id="typeHint" class="calli-hint">选好音色 → 点"抽一句" → 对着文字真打（中文用输入法也行）</p>
+    <p id="typeHint" class="calli-hint">选好音色 → 点"抽一句" → 对着文字真打 · 敲回车换下一句</p>
     <div id="typeResult" class="calli-result" hidden></div>
   </section>
 
@@ -184,22 +185,32 @@
     <p id="loadHint" class="load-hint">静态 UI 已就绪 · 等 app.js 接管⋯⋯</p>
   </section>
 
-  <!-- 授权引导弹窗 -->
-  <div id="permModal" class="perm-modal" hidden>
-    <div class="perm-mask" onclick="window.__pk_closePerm && window.__pk_closePerm()"></div>
-    <div class="perm-card">
-      <button class="perm-close" onclick="window.__pk_closePerm && window.__pk_closePerm()">×</button>
-      <h3>让笔墨有声 · 三步</h3>
-      <ol class="perm-steps">
-        <li><b>点下方按钮</b>打开系统设置 · 隐私与安全性 · 辅助功能</li>
-        <li>在列表里找到 <code>纸上键</code>，<b>打开开关</b>（可能需要再点一次加号添加）</li>
-        <li>回到这里 <b>点"我已开启，落笔有声"</b> 按钮</li>
-      </ol>
-      <div class="perm-btns">
-        <button class="perm-btn primary" onclick="window.__pk_openPrefs && window.__pk_openPrefs()">打开系统设置</button>
-        <button class="perm-btn" onclick="window.__pk_confirmPerm && window.__pk_confirmPerm()">我已开启，落笔有声</button>
+  <!-- 首次引导（全新用户第一次启动） -->
+  <div id="pkOnboard" class="pk-ob" hidden>
+    <div class="pk-ob-mask"></div>
+    <div class="pk-ob-card">
+      <h3 class="pk-ob-title">欢迎 · 纸上键</h3>
+      <div class="pk-ob-body"></div>
+      <div class="pk-ob-foot"></div>
+      <div class="pk-ob-dots"></div>
+    </div>
+  </div>
+
+  <!-- 诊断 + 修复面板（点状态条或权限失效时弹） -->
+  <div id="pkDiagDlg" class="pk-dd" hidden>
+    <div class="pk-dd-mask" data-close></div>
+    <div class="pk-dd-card">
+      <div class="pk-dd-head">
+        <h3>权限诊断</h3>
+        <button class="pk-dd-close" data-close>×</button>
       </div>
-      <p class="perm-foot">⚠ 首次敲键盘后，系统才会把 纸上键 列进辅助功能。如果列表里没有，先回来随便敲一下键。</p>
+      <div class="pk-dd-body"></div>
+      <div class="pk-dd-actions">
+        <button class="pk-dd-btn primary" data-action="open-im">打开输入监控</button>
+        <button class="pk-dd-btn" data-action="request">申请授权</button>
+        <button class="pk-dd-btn" data-action="open-ax">打开辅助功能</button>
+        <button class="pk-dd-btn" data-action="restart" style="display:none;">重启 app</button>
+      </div>
     </div>
   </div>
 
@@ -218,7 +229,9 @@
   window.__paperkey_inline_ran__ = true;
 </script>
 <script src="synth.js?v=1"></script>
-<script src="typing.js?v=1"></script>
-<script src="app.js?v=7"></script>
+<script src="vendor-jszip.min.js"></script>
+<script src="typing.js?v=13"></script>
+<script src="onboarding.js?v=1"></script>
+<script src="app.js?v=9"></script>
 </body>
 </html>
